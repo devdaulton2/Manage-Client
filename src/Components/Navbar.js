@@ -29,12 +29,12 @@ class SiteBar extends React.Component {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NavItem>Dashboard
+                            {/* <NavItem>Dashboard
                             </NavItem>
                             <NavItem>Team Task
                             </NavItem>
                             <NavItem>My Account
-                            </NavItem>
+                            </NavItem> */}
                             <NavItem>
                                 <Button onClick={() => this.props.clickLogout()}>Sign Out</Button>
                             </NavItem>

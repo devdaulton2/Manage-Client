@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Signup from './Signup';
 import Login from './Login';
 import styled from 'styled-components';
+import { Button, Card, CardText, CardImg, CardTitle, CardImgOverlay } from 'reactstrap';
 
 const LogoContainer = styled.div`
     font-size: 22px;
@@ -10,6 +11,7 @@ const LogoContainer = styled.div`
     align-items: center;
     justify-content: center;
 `;
+
 const Container = styled.div`
     width: 100%;
     height: 100%;
@@ -86,14 +88,37 @@ class Auth extends Component {
         this.setState({active: !this.state.active});
     }
 
-    switchToLogin = (e) => {
-        this.setState({active: "login"})
-    }
-
     render() {
         let hour = new Date().getHours()
     return (
         <Row>
+        <Column span="6">
+        <div>
+            <Card align="center" >
+                {/* <CardImgOverlay> */}
+                <CardTitle tag="h5">
+                    <br/>
+                    Achieving the big picture without
+                    <br />
+                    losing track of the little things
+                </CardTitle>
+                <CardText tag="h1">
+                    Somehow I Manage
+                </CardText>
+                <CardText>
+                    <small className="text-muted">
+                    <Button onClick={this.authToggle}>Start Managing!</Button>
+                    </small>
+                </CardText>
+                {/* </CardImgOverlay> */}
+                <CardImg
+                alt="Card image cap"
+                // width="50%"
+                src="https://iconape.com/wp-content/files/gh/286205/png/Dunder_Mifflin-logo.png"
+                />
+            </Card>
+            </div>
+        </Column>
         <Column span="6">
         <Container>
             <TopContainer>
@@ -110,7 +135,7 @@ class Auth extends Component {
             <InnerContainer>
                 {this.state.active ? <Login setToken={this.props.setToken} updateID={this.props.updateID}/> : <Signup setToken={this.props.setToken} updateID={this.props.updateID}/>}
             </InnerContainer>
-            <button onClick={this.authToggle}>Toggle</button>
+
         </Container>
         </Column>
         </Row>

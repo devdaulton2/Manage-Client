@@ -1,20 +1,34 @@
 import React from 'react';
 import TaskCreate from './TaskCreate';
 import TaskTable from './TaskTable';
+import TaskEdit from './TaskEdit';
 import { Container, Row, Col } from 'reactstrap';
+import CommentEdit from './CommentEdit';
 
 class TaskIndex extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      tasks: []
+      tasks: [],
+      updatePressed: false,
+      taskToUpdate: {}
     }
+    this.fetchTasks.bind(this)
   }
-  componentWillMount() {
-    this.fetchTasks()
+
+  setUpdatedTask = (event, task) => {
+    this.setState({
+        commentToUpdate: task, 
+        updatePressed: true 
+    })
+}
+
+  componentDidMount() {
+    this.fetchTasks();
   }
+
   fetchTasks = () => {
-    fetch("http://localhost:3000/task/", {
+    fetch("http://localhost:3000/task/all", {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -22,20 +36,25 @@ class TaskIndex extends React.Component {
       })
     })
       .then((res) => res.json())
-      .then((logData) => {
-        return this.setState({ tasks: logData })
+      .then((taskData) => {
+        console.log(taskData)
+        return this.setState({ tasks: taskData })
       })
-  }
+    }
+
   render() {
+    {console.log(this.state.tasks)}
     return (
       <Container>
         <Row>
-          <Col md="3">
-            <TaskCreate />
-            <TaskTable tasks={this.state.tasks} />
-            <TaskIndex tasks={this.state.tasks} />
+          <Col md="10">
+            <TaskCreate fetchTasks={this.fetchTasks} token={this.props.token} tasks={this.state.tasks} />
+            <TaskTable fetchTasks={this.fetchTasks} tasks={this.state.tasks} />
+            {/* <TaskEdit tasks={this.state.tasks} /> */}
+            {
+            this.state.updatePressed ? <TaskEdit t={this.state.updatePressed} update={this.taskUpdate} task={this.state.taskToUpdate} /> : <div></div> }
           </Col>
-          <Col md="9">
+          <Col md="2">
             <h2> </h2>
           </Col>
         </Row>

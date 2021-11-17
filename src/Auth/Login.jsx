@@ -9,11 +9,11 @@ const Container = styled.div`
 `;
 
 const ButtonContainer = styled.button`
-    width: 100%;
-    color: #fffff;
+    width: 50%;
+    color: black;
     font-size: 22px;
     border: none;
-    background-color: #fffff;
+    background-color: #black;
     border-radius: 4px;
 
     @media (max-width: 1024px) {
@@ -30,19 +30,29 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
+            email: '',
             password: ''
         };
     }
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value,
-        });
+    // handleChange = (event) => {
+    //     this.setState({
+    //         [event.target.name]: event.target.value
+    //     });
+    // }
+
+    authToggle = (e) => {
+        e.preventDefault();
+        this.setState({active: !this.state.active});
     }
+
     handleSubmit = (event) => {
+        event.preventDefault()
         fetch("http://localhost:3000/user/signin", {
             method: 'POST',
-            body: JSON.stringify({user:this.state}),
+            body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password
+            }),
             headers: new Headers({
                 'Content-Type': 'application/json'
               })
@@ -51,21 +61,22 @@ class Login extends Component {
         ).then((data) => {
             this.props.setToken(data.sessionToken)
         }) 
-        event.preventDefault()
     }
+
+
     render(){
     return (
         <Container>
             <Form onSubmit={this.handleSubmit}>
                     <Label htmlFor="email">Email</Label>
-                    <InputFont><Input onChange={(e) => this.setState({username: e.target.value})} name="username" value={this.state.username} placeholder="Username" type="email"/></InputFont>
+                    <InputFont><Input onChange={(e) => this.setState({email: e.target.value})} name="email" value={this.state.email} placeholder="Username" type="email"/></InputFont>
                     {/* <br /> */}
                     <Label htmlFor="password">Password</Label>
                     <InputFont><Input onChange={(e) => this.setState({password: e.target.value})} name="password" value={this.state.password} placeholder="Password" type="password"/></InputFont>
                     {/* <br /> */}
                     <ButtonContainer type="submit">Login</ButtonContainer>
                     <br />
-                    <p>Don't have an account? <a href="/signup" onClick={this.props.switchToSignup}>Start Managing</a></p>
+                    {/* <p>Don't have an account? <Button onClick={this.authToggle}>Start Managing!</Button></p> */}
 
             </Form>
         </Container>

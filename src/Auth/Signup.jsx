@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import { Form, Input, Label } from "reactstrap";
 import styled from "styled-components";
 
@@ -9,11 +9,11 @@ const Container = styled.div`
 `;
 
 const ButtonContainer = styled.button`
-  width: 30%;
-  color: #fff;
+  width: 50%;
+  color: white;
   font-size: 22px;
   border: none;
-  background-color: #677487;
+  background-color: #fffff;
   border-radius: 4px;
 
   @media (max-width: 1024px) {
@@ -24,25 +24,31 @@ const ButtonContainer = styled.button`
 const MemberP = styled.p`
   padding-top: 5%;
 `;
-const Signup = (props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [accessCode, setAccessCode] = useState("");
 
-  let handleSubmit = (event) => {
+class Signup extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      birthday: '',
+      accessCode: ''
+    };
+  }
+
+  handleSubmit = (event) => {
     event.preventDefault();
     fetch(`http://localhost:3000/user/signup`, {
       method: "POST",
       body: JSON.stringify({
-        email: username,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        birthday: birthday,
-        accessCode: accessCode
+        email: this.state.username,
+        password: this.state.password,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        birthday: this.state.birthday,
+        accessCode: this.state.accessCode
       }),
       headers: new Headers({
         "Content-Type": "application/json",
@@ -56,50 +62,56 @@ const Signup = (props) => {
       });
   };
 
+  authToggle = (e) => {
+    e.preventDefault();
+    this.setState({active: !this.state.active});
+};
+
+  render(){
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={this.handleSubmit}>
         <Label htmlFor="firstName">First Name</Label>
         <Input
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(e) => this.setState({firstName: e.target.value})}
           name="firstName"
-          value={firstName}
+          value={this.state.firstName}
           type="text"
           placeholder="First Name"
         />
         <br />
         <Label htmlFor="lastName">Last Name</Label>
         <Input
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={(e) => this.setState({lastName: e.target.value})}
           name="lastName"
-          value={lastName}
+          value={this.state.lastName}
           type="text"
           placeholder="Last Name"
         />
         <br />
         <Label htmlFor="birthday">Birthday</Label>
         <Input
-          onChange={(e) => setBirthday(e.target.value)}
+          onChange={(e) => this.setState({birthday: e.target.value})}
           name="birthday"
-          value={birthday}
+          value={this.state.birthday}
           type="date"
           placeholder="Birthday"
         />
         <br />
         <Label htmlFor="email">Email</Label>
         <Input
-          onChange={(e) => setUsername(e.target.value)}
-          name="username"
-          value={username}
+          onChange={(e) => this.setState({email: e.target.value})}
+          name="email"
+          value={this.state.email}
           type="email"
-          placeholder="Username"
+          placeholder="Email"
         />
         <br />
         <Label htmlFor="password">Password</Label>
         <Input
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => this.setState({password: e.target.value})}
           name="password"
-          value={password}
+          value={this.state.password}
           type="password"
           placeholder="Password"
           pattern="[A-Za-z]{8}"
@@ -109,9 +121,9 @@ const Signup = (props) => {
         <br />
         <Label htmlFor="accessCode">Access Code</Label>
         <Input
-          onChange={(e) => setAccessCode(e.target.value)}
+          onChange={(e) => this.setState({accessCode: e.target.value})}
           name="accessCode"
-          value={accessCode}
+          value={this.state.accessCode}
           type="accessCode"
           placeholder="Access Code"
         />
@@ -119,14 +131,12 @@ const Signup = (props) => {
         <ButtonContainer type="submit">Signup</ButtonContainer>
         <br />
         <MemberP>
-          Already managing?{" "}
-          <a href="/login" onClick={props.switchToLogin}>
-            Log In
-          </a>
+        {/* <p>Already have an account? <button onClick={this.authToggle}>Get Managing!</button></p> */}
         </MemberP>
       </Form>
     </Container>
   );
 };
+}
 
 export default Signup;

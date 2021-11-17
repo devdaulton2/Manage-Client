@@ -16,7 +16,7 @@ class App extends Component {
       sessionToken: ''  
     }
   }
-componentWillMount() {
+componentDidMount() {
     const token = localStorage.getItem('token'); 
     if (token && !this.state.sessionToken) {   
       this.setState({ sessionToken: token });
@@ -57,7 +57,7 @@ logout = () => {
   return (
     <Router>
     <div className="App">
-      <h1>Somehow I Manage</h1>
+      {/* <h1>Somehow I Manage</h1> */}
 
       {/* <Auth setSessionState= {this.setSessionState}/> */}
       <SiteBar clickLogout={this.logout} />

@@ -1,20 +1,21 @@
 import React from 'react';
 import { Table, Button } from 'reactstrap';
+import TaskEdit from './TaskEdit';
 
 const TaskTable = (props) => {
+    console.log(props.tasks, "this is coming from the task table")
     return (
         <div>
             <h3>Current Tasks</h3>
             <hr />
-            <Table striped>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Employee</th>
+                        <th>Task ID</th>
                         <th>Type</th>
                         <th>SubType</th>
                         <th>Details</th>
                         <th>Solved?</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,11 +26,11 @@ const TaskTable = (props) => {
                                     <th scope="row">{task.id}</th>
                                     <td>{task.type}</td>
                                     <td>{task.subType}</td>
-                                    <td>{task.Details}</td>
+                                    <td>{task.details}</td>
                                     <td>{task.solved}</td>
                                     <td>
-                                        <Button id={task.id} onClick={props.delete} color="danger">Delete</Button>|
-                                        <Button id={task.id} onClick={e => props.update(e, task)} color="warning">Update</Button>
+                                        <Button id={task.id} onClick={props.delete} color="secondary">Delete</Button>|
+                                        <TaskEdit task={task} />
                                     </td>
                                 </tr>
                             )
