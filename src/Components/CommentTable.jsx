@@ -3,7 +3,7 @@ import { Table, Button } from 'reactstrap';
 import CommentEdit from './CommentEdit';
 
 const CommentTable = (props) => {
-    // console.log(props.comments)
+     console.log(props)
     return (
         <div>
             <h3>Comments</h3>
@@ -11,7 +11,7 @@ const CommentTable = (props) => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Task ID</th>
+                        <th>Comment ID</th>
                         <th>Comment</th>
                     </tr>
                 </thead>
@@ -24,9 +24,7 @@ const CommentTable = (props) => {
                                     <td>{comment.comment}</td>
                                     <td>
                                         <Button id={comment.id} onClick={props.delete} color="secondary">Delete</Button>|
-                                        {/* MOunt you CommentUpdate here 
-                                        <CommentEdit comment={comment} />
-                                        */}
+                                    
                                         <CommentEdit fetchComments={props.fetchComments} comment={comment} />
                                     </td>
                                 </tr>

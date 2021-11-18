@@ -43,14 +43,16 @@ class TaskEdit extends React.Component {
     //     // })
     // }
 
-    //   handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     this.props.update(event, this.state)
-    // }
+      handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(this.props)
+        this.props.update(event, this.state)
+    }
   
     toggle = () => this.setState({ modal: !this.state.modal})
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <Button color="secondary" onClick={this.toggle}>Edit</Button>

@@ -30,7 +30,7 @@ const TaskTable = (props) => {
                                     <td>{task.solved}</td>
                                     <td>
                                         <Button id={task.id} onClick={props.delete} color="secondary">Delete</Button>|
-                                        <TaskEdit task={task} />
+                                        <TaskEdit task={task} update={props.update}/>
                                     </td>
                                 </tr>
                             )

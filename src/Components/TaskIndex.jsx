@@ -18,7 +18,7 @@ class TaskIndex extends React.Component {
 
   setUpdatedTask = (event, task) => {
     this.setState({
-        commentToUpdate: task, 
+        taskToUpdate: task, 
         updatePressed: true 
     })
 }
@@ -49,10 +49,10 @@ class TaskIndex extends React.Component {
         <Row>
           <Col md="10">
             <TaskCreate fetchTasks={this.fetchTasks} token={this.props.token} tasks={this.state.tasks} />
-            <TaskTable fetchTasks={this.fetchTasks} tasks={this.state.tasks} />
+            <TaskTable fetchTasks={this.fetchTasks} tasks={this.state.tasks} t={this.updatePressed} update={this.setUpdatedTask} task={this.state.taskToUpdate} />
             {/* <TaskEdit tasks={this.state.tasks} /> */}
-            {
-            this.state.updatePressed ? <TaskEdit t={this.state.updatePressed} update={this.taskUpdate} task={this.state.taskToUpdate} /> : <div></div> }
+            
+            {/* <TaskEdit t={this.updatePressed} update={this.setUpdatedTask} task={this.state.taskToUpdate} />  */}
           </Col>
           <Col md="2">
             <h2> </h2>
